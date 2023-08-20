@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@ts-rest/core':
         specifier: ^3.28.0
-        version: 3.28.0(zod@3.21.4)
+        version: 3.28.0
 
   apps/server:
     dependencies:
@@ -32,12 +32,6 @@ importers:
       '@nestjs/platform-express':
         specifier: ^9.0.0
         version: 9.0.0(@nestjs/common@9.0.0)(@nestjs/core@9.0.0)
-      '@ts-rest/core':
-        specifier: ^3.28.0
-        version: 3.28.0(zod@3.21.4)
-      '@ts-rest/nest':
-        specifier: ^3.28.0
-        version: 3.28.0(@nestjs/common@9.0.0)(@nestjs/core@9.0.0)(@ts-rest/core@3.28.0)(rxjs@7.2.0)(zod@3.21.4)
       reflect-metadata:
         specifier: ^0.1.13
         version: 0.1.13
@@ -114,12 +108,6 @@ importers:
 
   apps/web:
     dependencies:
-      '@ts-rest/core':
-        specifier: ^3.28.0
-        version: 3.28.0(zod@3.21.4)
-      '@ts-rest/react-query':
-        specifier: ^3.28.0
-        version: 3.28.0(@tanstack/react-query@4.32.6)(@ts-rest/core@3.28.0)(react@18.2.0)
       '@types/node':
         specifier: 18.11.18
         version: 18.11.18
@@ -1178,72 +1166,13 @@ packages:
       tslib: 2.6.1
     dev: false
 
-  /@tanstack/query-core@4.32.6:
-    resolution: {integrity: sha512-YVB+mVWENQwPyv+40qO7flMgKZ0uI41Ph7qXC2Zf1ft5AIGfnXnMZyifB2ghhZ27u+5wm5mlzO4Y6lwwadzxCA==}
-    dev: false
-
-  /@tanstack/react-query@4.32.6(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-AITu/IKJJJXsHHeXNBy5bclu12t08usMCY0vFC2dh9SP/w6JAk5U9GwfjOIPj3p+ATADZvxQPe8UiCtMLNeQbg==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-      react-native: '*'
-    peerDependenciesMeta:
-      react-dom:
-        optional: true
-      react-native:
-        optional: true
-    dependencies:
-      '@tanstack/query-core': 4.32.6
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      use-sync-external-store: 1.2.0(react@18.2.0)
-    dev: false
-
-  /@ts-rest/core@3.28.0(zod@3.21.4):
+  /@ts-rest/core@3.28.0:
     resolution: {integrity: sha512-m0Wn2DgO3O57dsGT5fqxvF/WNFPx/8/dxbqLMV9TYXwLBgaJG4vDgR7qXVIYss/c5vlHTQ0oB9X+PwxhI3ksMg==}
     peerDependencies:
       zod: ^3.21.0
     peerDependenciesMeta:
       zod:
         optional: true
-    dependencies:
-      zod: 3.21.4
-    dev: false
-
-  /@ts-rest/nest@3.28.0(@nestjs/common@9.0.0)(@nestjs/core@9.0.0)(@ts-rest/core@3.28.0)(rxjs@7.2.0)(zod@3.21.4):
-    resolution: {integrity: sha512-nEVFSQCu/FzXWcGVusjK5IgNZe2vHJNiXA6IdYDV+p4Vk1AsihQdlnis4U/Xcl4ExxunOX0IfR0kgYI6uiVVKQ==}
-    peerDependencies:
-      '@nestjs/common': ^9.0.0 || ^10.0.0
-      '@nestjs/core': ^9.0.0 || ^10.0.0
-      '@ts-rest/core': 3.28.0
-      rxjs: ^7.1.0
-      zod: ^3.21.0
-    peerDependenciesMeta:
-      zod:
-        optional: true
-    dependencies:
-      '@nestjs/common': 9.0.0(class-transformer@0.2.3)(class-validator@0.11.1)(reflect-metadata@0.1.13)(rxjs@7.2.0)
-      '@nestjs/core': 9.0.0(@nestjs/common@9.0.0)(@nestjs/platform-express@9.0.0)(reflect-metadata@0.1.13)(rxjs@7.2.0)
-      '@ts-rest/core': 3.28.0(zod@3.21.4)
-      rxjs: 7.2.0
-      zod: 3.21.4
-    dev: false
-
-  /@ts-rest/react-query@3.28.0(@tanstack/react-query@4.32.6)(@ts-rest/core@3.28.0)(react@18.2.0):
-    resolution: {integrity: sha512-sLMTS48TeDYz5r0sGP2OgmHghe1MvGfHrOWLGjNux13SygDwAWuo5+RMW7YEAtN5CbxJYDIMl6xP86Zc8F2v0g==}
-    peerDependencies:
-      '@tanstack/react-query': ^4.18.0
-      '@ts-rest/core': 3.28.0
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-      zod: ^3.21.0
-    peerDependenciesMeta:
-      zod:
-        optional: true
-    dependencies:
-      '@tanstack/react-query': 4.32.6(react-dom@18.2.0)(react@18.2.0)
-      '@ts-rest/core': 3.28.0(zod@3.21.4)
-      react: 18.2.0
     dev: false
 
   /@tsconfig/node10@1.0.9:
@@ -6191,14 +6120,6 @@ packages:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
     dependencies:
       punycode: 2.3.0
-
-  /use-sync-external-store@1.2.0(react@18.2.0):
-    resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}

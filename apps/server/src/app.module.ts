@@ -1,17 +1,12 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { server } from './config';
-import { TestController } from './test/test.controller';
-import { TestModule } from './test/test.module';
+import { CardsModule } from './cards/cards.module';
+import { CollectionsModule } from './collections/collections.module';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({ load: [server], isGlobal: true }),
-    TestModule,
-  ],
-  controllers: [AppController, TestController],
+  controllers: [AppController],
   providers: [AppService],
+  imports: [CardsModule, CollectionsModule],
 })
 export class AppModule {}

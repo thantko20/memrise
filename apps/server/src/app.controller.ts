@@ -1,14 +1,5 @@
-import { Controller, Get } from '@nestjs/common';
-import {
-  NestControllerInterface,
-  NestRequestShapes,
-  TsRest,
-  TsRestHandler,
-  nestControllerContract,
-  tsRestHandler,
-} from '@ts-rest/nest';
+import { Controller } from '@nestjs/common';
 import { AppService } from './app.service';
-import { contract } from './contract';
 
 @Controller()
 export class AppController {
