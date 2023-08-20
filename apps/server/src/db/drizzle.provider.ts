@@ -6,23 +6,26 @@ import { ConfigService } from '@nestjs/config';
 
 export type DB = NodePgDatabase;
 
-export const db: FactoryProvider = {
-  provide: 'database',
+export const db: FactoryProvider<DB> = {
+  provide: 'DATABASE_CONNECTION',
   inject: [ConfigService],
   useFactory: async (configService: ConfigService) => {
-    const logger = new Logger('database');
+    const logger = new Logger('DATABASE');
     const uri = configService.get('db_connection');
 
     const client = new Pool({
       connectionString: uri,
       ssl: true,
     });
+
+    logger.log('Connecting to database');
     await client.connect();
     logger.log('Connected to database');
 
     const drizzleDb = drizzle(client);
+    logger.log('Running migrations');
     await migrate(drizzleDb, { migrationsFolder: './migrations' });
-    logger.log('Migration completed');
+    logger.log('Migrations completed');
 
     return drizzleDb;
   },
