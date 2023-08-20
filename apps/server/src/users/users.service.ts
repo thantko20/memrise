@@ -3,12 +3,13 @@ import * as argon2 from 'argon2';
 import { DB } from '@server/db/drizzle.provider';
 import { User, users } from '@server/db/schemas';
 import { eq } from 'drizzle-orm';
+import { RegisterUserDto } from '@server/auth/auth.schema';
 
 @Injectable()
 export class UsersService {
   constructor(@Inject('DATABASE_CONNECTION') private readonly db: DB) {}
 
-  async create(data: Pick<User, 'name' | 'password' | 'email'>) {
+  async create(data: RegisterUserDto) {
     const uniqueEmail = await this.db
       .select({ id: users.id })
       .from(users)
@@ -30,6 +31,16 @@ export class UsersService {
       .select({ id: users.id, name: users.name, email: users.email })
       .from(users);
     return result;
+  }
+
+  async findUserByEmail(email: string) {
+    const result = await this.db
+      .select({ id: users.id, name: users.name, email: users.email })
+      .from(users)
+      .where(eq(users.email, email))
+      .limit(1);
+
+    return result[0];
   }
 
   findOne(id: number) {

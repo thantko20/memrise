@@ -9,7 +9,8 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { CommonModule } from './common/common.module';
 import configuration from './config/configuration';
-import { HttpLogger } from './common/http-logger.middleware';
+import { HttpLogger } from './common/middlewares/http-logger.middleware';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   controllers: [AppController],
@@ -19,6 +20,7 @@ import { HttpLogger } from './common/http-logger.middleware';
       load: [configuration],
       isGlobal: true,
     }),
+    JwtModule.register({ global: true }),
     CardsModule,
     CollectionsModule,
     DbModule,

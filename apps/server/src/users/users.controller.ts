@@ -6,11 +6,6 @@ import { User } from '@server/db/schemas';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
-  create(@Body() createUserDto: Pick<User, 'name' | 'email' | 'password'>) {
-    return this.usersService.create(createUserDto);
-  }
-
   @Get()
   findAll() {
     return this.usersService.findUsers();

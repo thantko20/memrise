@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { HttpLogger } from './http-logger.middleware';
+import { HttpLogger } from './middlewares/http-logger.middleware';
 
 @Module({
   providers: [HttpLogger],
