@@ -1,5 +1,12 @@
 import { InferModel } from 'drizzle-orm';
-import { pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
+import {
+  pgTable,
+  text,
+  timestamp,
+  unique,
+  uuid,
+  varchar,
+} from 'drizzle-orm/pg-core';
 
 export type User = InferModel<typeof users>;
 export type Collection = InferModel<typeof collections>;
@@ -9,7 +16,7 @@ export const users = pgTable('users', {
   id: uuid('id').defaultRandom().notNull().primaryKey(),
   name: varchar('name', { length: 256 }).notNull(),
   password: varchar('password', { length: 256 }).notNull(),
-  email: varchar('email', { length: 256 }).notNull(),
+  email: varchar('email', { length: 256 }).notNull().unique(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
@@ -31,6 +38,7 @@ export const cards = pgTable('cards', {
   back: text('back').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  description: text('description'),
   collectionId: uuid('collection_id')
     .notNull()
     .references(() => collections.id),
