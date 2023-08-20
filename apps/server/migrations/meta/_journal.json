@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1692532965895,
+      "tag": "0000_late_molten_man",
+      "breakpoints": false
+    }
+  ]
+}
