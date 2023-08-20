@@ -9,7 +9,7 @@ export type DB = NodePgDatabase;
 export const db: FactoryProvider<DB> = {
   provide: 'DATABASE_CONNECTION',
   inject: [ConfigService],
-  useFactory: async (configService: ConfigService) => {
+  useFactory: async function (configService: ConfigService) {
     const logger = new Logger('DATABASE');
     const uri = configService.get('db_connection');
 

@@ -4,7 +4,7 @@ import { collections } from '@server/db/schemas';
 
 @Injectable()
 export class CollectionsService {
-  constructor(@Inject('DATABASE_CONNECTION') private db: DB) {}
+  constructor(@Inject('DATABASE_CONNECTION') private readonly db: DB) {}
 
   async getCollections() {
     const result = await this.db.select().from(collections);
