@@ -17,17 +17,7 @@ export const db: FactoryProvider<DB> = {
       connectionString: uri,
       ssl: true,
     });
-
-    logger.log('Connecting to database');
-    await client.connect();
-    logger.log('Connected to database');
-
-    const drizzleDb = drizzle(client);
-    logger.log('Running migrations');
-    await migrate(drizzleDb, { migrationsFolder: './migrations' });
-    logger.log('Migrations completed');
-
-    return drizzleDb;
+    return drizzle(client);
   },
 };
 

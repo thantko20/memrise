@@ -43,6 +43,16 @@ export class UsersService {
     return result[0];
   }
 
+  async findUserById(id: string) {
+    const result = await this.db
+      .select({ id: users.id, name: users.name, email: users.email })
+      .from(users)
+      .where(eq(users.id, id))
+      .limit(1);
+
+    return result[0];
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} user`;
   }

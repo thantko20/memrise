@@ -1,11 +1,12 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { User } from '@server/db/schemas';
+import { AuthGuard } from '@server/auth/auth.guard';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @UseGuards(AuthGuard)
   @Get()
   findAll() {
     return this.usersService.findUsers();

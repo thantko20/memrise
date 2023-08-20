@@ -6,6 +6,7 @@ import { users } from '@server/db/schemas';
 import { eq } from 'drizzle-orm';
 import { LoginUserDto, RegisterUserDto } from './auth.schema';
 import { UsersService } from '@server/users/users.service';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
@@ -13,6 +14,7 @@ export class AuthService {
     @Inject('DATABASE_CONNECTION') private readonly db: DB,
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
   ) {}
 
   async login({ email, password }: LoginUserDto) {
@@ -40,7 +42,7 @@ export class AuthService {
         id: user.id,
         email: user.email,
       },
-      { secret: 'very secure' },
+      { secret: this.configService.get('jwt_secret') },
     );
     return { user: result, accessToken: token };
   }
