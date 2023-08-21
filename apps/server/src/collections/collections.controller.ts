@@ -1,22 +1,11 @@
-import {
-  BadRequestException,
-  Body,
-  Controller,
-  Get,
-  Post,
-} from '@nestjs/common';
-import { collections } from '@server/db/schemas';
-import { UsersService } from '@server/users/users.service';
-import { randomUUID } from 'crypto';
-import { InferModel } from 'drizzle-orm';
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import { User } from '@server/db/schemas';
+import { CurrentUser } from '@server/users/user.decorator';
 import { CollectionsService } from './collections.service';
 
 @Controller('collections')
 export class CollectionsController {
-  constructor(
-    private readonly collectionsService: CollectionsService,
-    private readonly usersService: UsersService,
-  ) {}
+  constructor(private readonly collectionsService: CollectionsService) {}
 
   @Get()
   async findAll() {
@@ -24,14 +13,13 @@ export class CollectionsController {
   }
 
   @Post()
-  async createCollection(@Body() data: { name: string; description: string }) {
-    const users = await this.usersService.findUsers();
-    if (users.length === 0) {
-      throw new BadRequestException('No users found');
-    }
+  async createCollection(
+    @Body() data: { name: string; description: string },
+    @CurrentUser() user: User,
+  ) {
     return await this.collectionsService.createCollection({
       ...data,
-      userId: users[0].id,
+      userId: user.id,
     });
   }
 }
