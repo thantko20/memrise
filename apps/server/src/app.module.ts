@@ -15,8 +15,6 @@ import { User } from './users/entities/user.entity';
 import { Collection } from './collections/entities/collection.entity';
 import { Card } from './cards/entities/card.entity';
 
-const configService = new ConfigService();
-
 @Module({
   controllers: [AppController],
   providers: [AppService],
