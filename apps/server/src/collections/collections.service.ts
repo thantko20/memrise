@@ -1,42 +1,47 @@
 import {
   BadRequestException,
   ForbiddenException,
-  Inject,
   Injectable,
+  Logger,
 } from '@nestjs/common';
-import { CreateCardDto } from '@server/cards/cards.schema';
+import { InjectRepository } from '@nestjs/typeorm';
 import { CardsService } from '@server/cards/cards.service';
-import { DB } from '@server/db/drizzle.provider';
-import { Card, collections, User } from '@server/db/schemas';
-import { eq, InferModel } from 'drizzle-orm';
+import { User } from '@server/users/entities/user.entity';
+import { DeepPartial, FindManyOptions, Repository } from 'typeorm';
 import { AddCardToCollectionDto } from './collections.schema';
+import { Collection } from './entities/collection.entity';
 
 @Injectable()
 export class CollectionsService {
+  private logger = new Logger('CollectionsService');
   constructor(
-    @Inject('DATABASE_CONNECTION') private readonly db: DB,
+    @InjectRepository(Collection)
+    private readonly collectionsRepository: Repository<Collection>,
     private readonly cardsService: CardsService,
   ) {}
 
-  async getCollections() {
-    const result = await this.db.select().from(collections);
-    return result;
+  async getCollections(data?: Partial<{ userId: string }>) {
+    this.logger.debug(data);
+    const where: FindManyOptions<Collection>['where'] = {};
+    if (data?.userId) {
+      where.userId = data.userId;
+    }
+    const collections = await this.collectionsRepository.find({
+      where,
+      relations: {
+        user: true,
+      },
+    });
+    return collections;
   }
 
-  async createCollection(data: InferModel<typeof collections, 'insert'>) {
-    const result = await this.db.insert(collections).values(data).returning();
-
-    return result[0];
+  async createCollection(data: DeepPartial<Collection>) {
+    const collection = this.collectionsRepository.create(data);
+    return await this.collectionsRepository.save(collection);
   }
 
   async getCollectionById(id: string) {
-    const result = await this.db
-      .select()
-      .from(collections)
-      .where(eq(collections.id, id))
-      .limit(1);
-
-    return result[0];
+    return await this.collectionsRepository.findBy({ id });
   }
 
   async addCardToCollection(
@@ -44,11 +49,9 @@ export class CollectionsService {
     cardData: AddCardToCollectionDto,
     user: User,
   ) {
-    const [collection] = await this.db
-      .select()
-      .from(collections)
-      .where(eq(collections.id, collectionId))
-      .limit(1);
+    const collection = await this.collectionsRepository.findOneBy({
+      id: collectionId,
+    });
     if (!collection) {
       throw new BadRequestException('Collection does not exist');
     }

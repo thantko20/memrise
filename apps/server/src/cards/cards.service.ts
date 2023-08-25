@@ -1,13 +1,16 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { DB } from '@server/db/drizzle.provider';
-import { cards } from '@server/db/schemas';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateCardDto } from './cards.schema';
+import { Card } from './entities/card.entity';
 
 @Injectable()
 export class CardsService {
-  constructor(@Inject('DATABASE_CONNECTION') private readonly db: DB) {}
+  constructor(
+    @InjectRepository(Card) private cardsRepository: Repository<Card>,
+  ) {}
 
   async createCard(data: CreateCardDto) {
-    return await this.db.insert(cards).values(data).returning();
+    return await this.cardsRepository.save(data);
   }
 }

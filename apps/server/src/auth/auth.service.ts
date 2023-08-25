@@ -1,9 +1,6 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as argon2 from 'argon2';
-import { DB } from '@server/db/drizzle.provider';
-import { users } from '@server/db/schemas';
-import { eq } from 'drizzle-orm';
 import { LoginUserDto, RegisterUserDto } from './auth.schema';
 import { UsersService } from '@server/users/users.service';
 import { ConfigService } from '@nestjs/config';
@@ -11,7 +8,6 @@ import { ConfigService } from '@nestjs/config';
 @Injectable()
 export class AuthService {
   constructor(
-    @Inject('DATABASE_CONNECTION') private readonly db: DB,
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
@@ -21,11 +17,7 @@ export class AuthService {
     const invalidCredentialsError = new BadRequestException(
       'Invalid credentials',
     );
-    const [user] = await this.db
-      .select()
-      .from(users)
-      .where(eq(users.email, email));
-
+    const user = await this.usersService.findDangerousUserByEmail(email);
     if (!user) {
       throw invalidCredentialsError;
     }
