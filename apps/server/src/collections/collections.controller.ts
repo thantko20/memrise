@@ -1,6 +1,8 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { CreateCardDto } from '@server/cards/cards.schema';
 import { User } from '@server/db/schemas';
 import { CurrentUser } from '@server/users/user.decorator';
+import { AddCardToCollectionDto } from './collections.schema';
 import { CollectionsService } from './collections.service';
 
 @Controller('collections')
@@ -21,5 +23,18 @@ export class CollectionsController {
       ...data,
       userId: user.id,
     });
+  }
+
+  @Post(':id/cards')
+  async addCardToCollection(
+    @Body() data: AddCardToCollectionDto,
+    @CurrentUser() user: User,
+    @Param('id') collectionId: string,
+  ) {
+    return await this.collectionsService.addCardToCollection(
+      collectionId,
+      data,
+      user,
+    );
   }
 }
