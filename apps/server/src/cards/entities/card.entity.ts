@@ -21,6 +21,9 @@ export class Card {
   @Column({ type: 'text', nullable: true })
   description?: string;
 
+  @Column({ name: 'collection_id', nullable: true })
+  collectionId: string;
+
   @ManyToOne(() => Collection, (collection) => collection.id)
   @JoinColumn({ name: 'collection_id' })
   collection: Collection;

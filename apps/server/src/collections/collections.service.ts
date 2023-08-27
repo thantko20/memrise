@@ -41,7 +41,10 @@ export class CollectionsService {
   }
 
   async getCollectionById(id: string) {
-    return await this.collectionsRepository.findBy({ id });
+    return await this.collectionsRepository.find({
+      where: { id },
+      relations: { cards: true },
+    });
   }
 
   async addCardToCollection(

@@ -1,7 +1,9 @@
+import { Collection } from '@server/collections/entities/collection.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -25,4 +27,7 @@ export class User {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: string;
+
+  @OneToMany(() => Collection, (collection) => collection.user)
+  collections: Collection[];
 }

@@ -10,10 +10,7 @@ import { CommonModule } from './common/common.module';
 import configuration from './config/configuration';
 import { HttpLogger } from './common/middlewares/http-logger.middleware';
 import { JwtModule } from '@nestjs/jwt';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './users/entities/user.entity';
-import { Collection } from './collections/entities/collection.entity';
-import { Card } from './cards/entities/card.entity';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 @Module({
   controllers: [AppController],
@@ -22,14 +19,8 @@ import { Card } from './cards/entities/card.entity';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        url: configService.get<string>('db_connection'),
-        entities: [User, Collection, Card],
-        synchronize: true,
-        type: 'postgres',
-        ssl: true,
-        logger: 'debug',
-      }),
+      useFactory: (configService: ConfigService) =>
+        configService.get('typeorm') as TypeOrmModuleOptions,
     }),
     ConfigModule.forRoot({
       load: [configuration],

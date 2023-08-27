@@ -18,7 +18,10 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "migrate": "drizzle-kit generate:pg"
+    "typeorm": "ts-node ./node_modules/typeorm/cli",
+    "migration:generate": "pnpm typeorm migration:generate -d ./dist/src/config/typeorm.js",
+    "migration:run": "pnpm typeorm migration:run -d ./dist/src/config/typeorm.js",
+    "migration:revert": "pnpm typeorm migration:revert -d ./dist/src/config/typeorm.js"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -30,6 +33,7 @@
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/typeorm": "^10.0.0",
     "argon2": "^0.31.0",
+    "dotenv": "^16.3.1",
     "drizzle-orm": "^0.28.2",
     "pg": "^8.11.3",
     "postgres": "^3.3.5",

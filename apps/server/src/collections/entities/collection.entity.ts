@@ -1,9 +1,11 @@
+import { Card } from '@server/cards/entities/card.entity';
 import { User } from '@server/users/entities/user.entity';
 import {
   Column,
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -20,6 +22,9 @@ export class Collection {
 
   @Column({ name: 'user_id' })
   userId: string;
+
+  @OneToMany(() => Card, (card) => card.collection)
+  cards: Card[];
 
   @ManyToOne(() => User, (user) => user.id, {})
   @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
