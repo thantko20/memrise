@@ -17,6 +17,7 @@ export const config: DataSourceOptions = {
   logging: 'all',
   migrationsTableName: 'migrations_typeorm',
   migrations: ['dist/db-migrations/*.{js,ts}'],
+  synchronize: false,
 };
 
 const dataSource = new DataSource(config);
