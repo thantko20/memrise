@@ -6,7 +6,7 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 
 dotenv.config({ path: './.env' });
 
-export const config: DataSourceOptions = {
+export const typeormConfig: DataSourceOptions = {
   username: 'postgres',
   password: 'postgres',
   host: 'localhost',
@@ -20,6 +20,6 @@ export const config: DataSourceOptions = {
   synchronize: false,
 };
 
-const dataSource = new DataSource(config);
+const dataSource = new DataSource(typeormConfig);
 
 export default dataSource;
